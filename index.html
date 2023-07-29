@@ -4,75 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
-    <title>inspo</title>
+    <title>smste</title>
 </head>
-<body class="min-h-screen">
-    <div class="container mx-auto px-4 py-12">
-        <h1 class="text-4xl text-center font-bold mb-6">✨ Inspire Me</h1>
-        <form class="max-w-md mx-auto">
-            <div class="mb-6">
-                <label class="block text-gray-700 text-sm font-bold mb-2" for="preferred_art_styles">🎊 style</label>
-                <input type="text" id="preferred_art_styles" class="bg-gray-200 form-input mt-1 w-full rounded-md focus:ring-blue-500 focus:border-blue-500" name="preferred_art_styles" placeholder="E.g., Impressionism, Abstract, Surrealism"/>
-                <p class="mt-2 text-sm text-gray-500">Enter your preferred art styles (comma-separated)</p>
-            </div>
-            <div class="mb-6">
-                <label class="block text-gray-700 text-sm font-bold mb-2" for="artists_of_interest">🎨 artists</label>
-                <input type="text" id="artists_of_interest" class="bg-gray-200 form-input mt-1 w-full rounded-md focus:ring-blue-500 focus:border-blue-500" name="artists_of_interest" placeholder="E.g., Picasso, Van Gogh, Frida Kahlo"/>
-                <p class="mt-2 text-sm text-gray-500">Enter artists you are interested in (comma-separated)</p>
-            </div>
-            <div class="mb-6">
-                <label class="block text-gray-700 text-sm font-bold mb-2" for="art_type">🖼 type</label>
-                <input type="text" id="art_type" class="bg-gray-200 form-input mt-1 w-full rounded-md focus:ring-blue-500 focus:border-blue-500" name="art_type" placeholder="E.g., Painting, Sculpture, Photography"/>
-                <p class="mt-2 text-sm text-gray-500">Specify the type of art you want to see</p>
-            </div>
-            <div class="mb-6">
-                <label class="block text-gray-700 text-sm font-bold mb-2" for="general_idea">💡 already have a general idea?</label>
-                <input type="text" id="general_idea" class="bg-gray-200 form-input mt-1 w-full rounded-md focus:ring-blue-500 focus:border-blue-500" name="general_idea" placeholder="E.g., I have already gotten a few ideas such as this and that"/>
-                <p class="mt-2 text-sm text-gray-500">If you already have a general idea, plop it here</p>
-            </div>
-            <button type="button" id="submit-button" class="w-full bg-blue-600 text-white py-2 rounded-md flex items-center justify-center space-x-2 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 7.5h-.75A2.25 2.25 0 004.5 9.75v7.5a2.25 2.25 0 002.25 2.25h7.5a2.25 2.25 0 002.25-2.25v-7.5a2.25 2.25 0 00-2.25-2.25h-.75m-6 3.75l3 3m0 0l3-3m-3 3V1.5m6 9h.75a2.25 2.25 0 012.25 2.25v7.5a2.25 2.25 0 01-2.25 2.25h-7.5a2.25 2.25 0 01-2.25-2.25v-.75" />
-                  </svg>                                    
-                <span>Generate</span>
-            </button>
-            <!-- <button type="button" id="submit-button" class="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Generate</button> -->
-        </form>
-        <div id="output" class="my-8 text-lg text-gray-800"></div>
-        <footer class="text-center text-gray-600 mt-10">❤️</footer>
+<body>
+    <div class="text-center">
+        <h1 class="text-4xl font-bold">welc to smste</h1>
+        <section class="mb-6">
+            <h2 class="text-xl font-bold mb-2">things</h2>
+            <ul class="list-disc list-inside text-gray-700">
+                <li><a href="./art.html" title="art inspo">art inspo (click to view)</a</li>
+            </ul>
+        </section>
     </div>
     
-
-    <script>
-        document.getElementById("submit-button").addEventListener("click", () => {
-            const preferredArtStyles = document.querySelector('input[name="preferred_art_styles"]').value;
-            const artistsOfInterest = document.querySelector('input[name="artists_of_interest"]').value;
-            const artType = document.querySelector('input[name="art_type"]').value;
-            const generalIdea = document.querySelector('input[name="general_idea"]').value;
-            const substituted_prompt = `Generate single sentences providing 3 ideas for an artwork to create based off of the art styles ${preferredArtStyles} and artists of interest ${artistsOfInterest}, use this to enhance the single sentence inspiration as much as possible. give real world examples after your initial idea in the sentence. make the whole idea and example based off of ${artType} art type. please note that ${generalIdea} must be considered.`;
-            console.log(substituted_prompt);
-            const output = document.getElementById("output");
-            output.innerText = "";
-
-            const ws = new WebSocket(`wss://backend.buildpicoapps.com/ask_ai_streaming?app_id=traditional-write&prompt=${encodeURIComponent(substituted_prompt)}`);
-
-            ws.addEventListener("message", (event) => {
-                console.log(event.data);
-                output.innerText = `${output.innerText}${event.data}`;
-            });
-
-            ws.addEventListener("close", (event) => {
-                console.log("Connection closed", event.code, event.reason);
-                if (event.code != 1000) {
-                    alert("Oops, we ran into an error. Refresh the page and try again.");
-                }
-            });
-
-            ws.addEventListener("error", (error) => {
-                console.log('WebSocket error', error);
-                alert("Oops, we ran into an error. Refresh the page and try again.");
-            });
-        });
-    </script>
 </body>
 </html>
